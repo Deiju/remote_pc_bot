@@ -76,17 +76,19 @@ async def start(message: types.Message):
 async def handler(message: types.Message):
     if message.text == "⚡️ Включить ПК":
         send_wol(PC_MAC)
-        await message.answer("⚡️ Сигнал отправлен")
+        await message.answer(
+            "⚡️ Сигнал отправлен\n⏳ Подожди 30–60 секунд и проверь доступность"
+        )
 
-    elif message.text == "💻 Статус ПК":
+    elif message.text == "🔄 Проверить доступность ПК":
         try:
             r = requests.get(SERVER_URL, timeout=3)
             if r.status_code == 200:
-                await message.answer("🟢 ПК включён")
+                await message.answer("🟢 ПК доступен")
             else:
-                await message.answer("🔴 ПК выключен")
+                await message.answer("⚫️ ПК недоступен")
         except:
-            await message.answer("🔴 нен")
+            await message.answer("⚫️ ПК недоступен")
 
 # ==========================
 # ЗАПУСК
@@ -107,3 +109,4 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
