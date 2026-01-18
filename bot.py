@@ -58,7 +58,7 @@ def keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="⚡️ Включить ПК")],
-            [KeyboardButton(text="💻 Статус ПК")]
+            [KeyboardButton(text="🔄 Проверить доступность ПК")]
         ],
         resize_keyboard=True
     )
@@ -109,4 +109,5 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
