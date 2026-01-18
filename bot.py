@@ -8,7 +8,25 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.filters import Command
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
+import asyncio
+import platform
 
+async def is_pc_available(ip: str) -> bool:
+    system = platform.system().lower()
+
+    if system == "windows":
+        cmd = f"ping -n 1 {ip}"
+    else:
+        cmd = f"ping -c 1 {ip}"
+
+    process = await asyncio.create_subprocess_shell(
+        cmd,
+        stdout=asyncio.subprocess.DEVNULL,
+        stderr=asyncio.subprocess.DEVNULL
+    )
+    await process.communicate()
+
+    return process.returncode == 0
 # ==========================
 # НАСТРОЙКИ (из окружения)
 # ==========================
@@ -68,7 +86,7 @@ async def handler(message: types.Message):
             else:
                 await message.answer("🔴 ПК выключен")
         except:
-            await message.answer("🔴 ПК выключен")
+            await message.answer("🔴 нен")
 
 # ==========================
 # ЗАПУСК
@@ -87,4 +105,5 @@ async def main():
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
+
     asyncio.run(main())
